@@ -1,0 +1,27 @@
+.game-tile {
+    background-color: white;
+    width: 150px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("/src/images/paper-mario-background-lrg.png");
+    margin: 10px;
+}
+
+.game-tile:hover {
+    opacity: .85;
+    transition-duration: .2s;
+}
+
+.game-character-image {
+    height: 130px;
+    width: 100px;
+}
+
+.game-character-nameplate {
+    background-color: darkslategrey;
+    width: 100%;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
