@@ -1,10 +1,8 @@
 import React, { useState, useEffect} from "react";
 import GameTile from "./GameTile";
 import "../styles/PlaySection.css"
-function PlaySection() {
+function PlaySection(props) {
     const [board, setBoard] = useState(populateCharacterArray());
-    const [currScore, setCurrScore] = useState(0);
-    const [bestScore, setBestScore] = useState(0);
 
     function createTile(characterName, fileName) {
         let tileObject = {
@@ -27,6 +25,7 @@ function PlaySection() {
         characterArray[5] = createTile("Yoshi", "luigi.png");
         characterArray[6] = createTile("Koopa Kid", "luigi.png");
         characterArray[7] = createTile("Chain Chomp", "luigi.png");
+        characterArray.sort((a, b) => a.sortingNum > b.sortingNum);
         return characterArray;  
     }
 
@@ -36,20 +35,26 @@ function PlaySection() {
         // If no, increase score
         // If current score > best score, increase best score
         for(let boardIncrement=0; boardIncrement<board.length; boardIncrement++) {
-            if(board[boardIncrement.id] === componentID) {
+            if(board[boardIncrement].id === componentID) {
                 if(board[boardIncrement].hasBeenClicked === true) {
                     // Game Over
-                    setCurrScore(0);
+                    props.setCurrScore(0);
                 } else {
                     board[boardIncrement].hasBeenClicked = true;
-                    setCurrScore(currScore + 1);
-                    //if(currScore > bestScore) {
-                    //    setBestScore(currScore);
-                    //}
+                    let newCurrScore = props.currScore + 1;
+                    props.setCurrScore(newCurrScore);
+                    if(newCurrScore >= props.bestScore) {
+                        props.setBestScore(newCurrScore);
+                    }
                 }
             }
-            
         }
+        randomizeGameTiles();
+    }
+
+    function resetGame() {
+        props.setCurrScore(0);
+        setBoard(populateCharacterArray());
     }
 
     function randomizeGameTiles() {
@@ -62,7 +67,7 @@ function PlaySection() {
     }
 
     const gameTileMap = board.map((character) => (
-        <GameTile key={character.id} characterName={character.characterName} randomizeGameTiles={randomizeGameTiles} hasBeenClicked={character.hasBeenClicked} characterImageSrc={character.fileName}/>
+        <GameTile key={character.id} id={character.id} characterName={character.characterName} adjustScore={adjustScore} randomizeGameTiles={randomizeGameTiles} hasBeenClicked={character.hasBeenClicked} characterImageSrc={character.fileName}/>
     ));
     return(
         <div className="play-section">
@@ -70,5 +75,11 @@ function PlaySection() {
         </div>
     );
 }
+
+// To do: update score paragraphs X
+// Reset game on game overs ~
+// Add more images 
+// Fix the update scorer (on console log, it's always 1 point behind) X
+
 
 export default PlaySection;
