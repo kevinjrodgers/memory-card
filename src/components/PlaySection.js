@@ -18,13 +18,16 @@ function PlaySection(props) {
     function populateCharacterArray() {
         const characterArray = [];
         characterArray[0] = createTile("Luigi", "luigi.png");
-        characterArray[1] = createTile("Mario", "luigi.png");
-        characterArray[2] = createTile("Bowser", "luigi.png");
-        characterArray[3] = createTile("Peach", "luigi.png");
-        characterArray[4] = createTile("Toad", "luigi.png");
-        characterArray[5] = createTile("Yoshi", "luigi.png");
-        characterArray[6] = createTile("Koopa Kid", "luigi.png");
-        characterArray[7] = createTile("Chain Chomp", "luigi.png");
+        characterArray[1] = createTile("Mario", "mario.png");
+        characterArray[2] = createTile("Bowser", "bowser.png");
+        characterArray[3] = createTile("Peach", "peachv3.png");
+        characterArray[4] = createTile("Bow", "bowv3.png");
+        characterArray[5] = createTile("Vivian", "vivian.png");
+        characterArray[6] = createTile("Koops", "koops.png");
+        characterArray[7] = createTile("Goombario", "goombario.png");
+        characterArray[8] = createTile("Goombella", "goombella.png");
+        //characterArray[9] = createTile("Ms. Mowz", "msmowz.png");
+        characterArray[9] = createTile("Admiral Bobbery", "admiralbobbery.png");
         characterArray.sort((a, b) => a.sortingNum > b.sortingNum);
         return characterArray;  
     }
@@ -39,6 +42,7 @@ function PlaySection(props) {
                 if(board[boardIncrement].hasBeenClicked === true) {
                     // Game Over
                     props.setCurrScore(0);
+                    resetGame();
                 } else {
                     board[boardIncrement].hasBeenClicked = true;
                     let newCurrScore = props.currScore + 1;
@@ -54,7 +58,13 @@ function PlaySection(props) {
 
     function resetGame() {
         props.setCurrScore(0);
-        setBoard(populateCharacterArray());
+        let newBoard = [...board];
+        for(let boardIncrement = 0; boardIncrement<newBoard.length; boardIncrement++) {
+            newBoard[boardIncrement].hasBeenClicked = false;
+        }
+        setBoard(newBoard);
+
+        //setBoard(populateCharacterArray());
     }
 
     function randomizeGameTiles() {

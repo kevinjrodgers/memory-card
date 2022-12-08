@@ -6,3 +6,10 @@
     max-width: 800px;
     margin: 0 auto;
 }
+
+@media only screen and (min-width: 800px) {
+    .play-section {
+        max-width: 1200px;
+    }
+    
+}

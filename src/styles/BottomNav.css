@@ -2,3 +2,10 @@
     width: 100%;
     background-color: dimgrey;
 }
+
+@media only screen and (min-width: 840px) {
+    .bottom-nav {
+        position: absolute;
+        bottom: 0;
+    }
+}
